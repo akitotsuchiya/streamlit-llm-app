@@ -1,10 +1,15 @@
 from langchain_openai import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
-
 import streamlit as st
+import os
 
-from dotenv import load_dotenv
-load_dotenv()
+# Streamlit Community Cloud用の環境変数設定
+if "OPENAI_API_KEY" in st.secrets:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+else:
+    # ローカル開発環境用
+    from dotenv import load_dotenv
+    load_dotenv()
 
 def get_llm_response(input_text, selected_expert):
     """
